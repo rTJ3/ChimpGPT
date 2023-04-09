@@ -1,0 +1,119 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Set the background color, font color, and font family for the entire page */
+  body {
+    background-color: #000;
+    color: #0f0;
+    font-family: 'Press Start 2P', cursive;
+  }
+  
+  /* Center the game container */
+  .game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  /* Style the game board */
+  .game-board {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 300px;
+    height: 300px;
+    border: 2px solid #0f0;
+    margin-bottom: 20px;
+  }
+  
+  /* Style the control buttons */
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .start-btn,
+  .reset-btn {
+    background-color: #0f0;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .start-btn:hover,
+  .reset-btn:hover {
+    background-color: #0a0;
+  }
+  
+  /* Style the score display */
+  .score-display {
+    font-size: 18px;
+  }
+  
+  /* Add a Google Font for the 8-bit style font */
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+  
+  /* Add responsive styles for smartphones */
+  @media screen and (max-width: 480px) {
+    .game-board {
+      width: 250px;
+      height: 250px;
+    }
+  
+    .start-btn,
+    .reset-btn {
+      font-size: 12px;
+      padding: 8px 16px;
+    }
+  
+    .score-display {
+      font-size: 16px;
+    }
+  }
+  
+  /* Add responsive styles for tablets */
+  @media screen and (min-width: 768px) {
+    .game-board {
+      width: 400px;
+      height: 400px;
+    }
+  }
+  
+  /* Add responsive styles for desktops */
+  @media screen and (min-width: 1024px) {
+    .game-board {
+      width: 500px;
+      height: 500px;
+    }
+  }
+  /* Style the leaderboard display */
+    .leaderboard-display {
+    margin-top: 20px;
+  }
+  
+  .leaderboard-display h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .leaderboard-list {
+    list-style: none;
+  }
+  
+  .leaderboard-list li {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  

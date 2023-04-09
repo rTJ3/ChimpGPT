@@ -1,0 +1,32 @@
+{
+  "name": "chimpgpt",
+  "version": "1.0.0",
+  "description": "Originally for the Chimps. Now for the Sapiens.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rTJ3/ChimpGPT.git"
+  },
+  "keywords": [
+    "Masked",
+    "Span",
+    "Task",
+    "Game",
+    "GPT4",
+    "Chimpanzee",
+    "Memory",
+    "Test"
+  ],
+  "author": "Porter, michael@qbii.co",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rTJ3/ChimpGPT/issues"
+  },
+  "homepage": "https://github.com/rTJ3/ChimpGPT#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

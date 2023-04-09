@@ -33,5 +33,10 @@ app.post('/leaderboard', (req, res) => {
   });
 });
 
+// Add the code snippet here, just before the app.listen() call
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // Start server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

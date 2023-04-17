@@ -1,32 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masked Span Task Game</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChimpGPT</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="game-container">
-        <div class="game-board">
-            <!-- Game tiles will be generated here -->
-        </div>
+  <div class="game-container">
+    <div class="controls-container">
+      <div class="upper-controls">
+        <h1 class="game-title">ChimpGPT</h1>
+        <h4 class="game-subtitle"><a href="https://qbii.co" target="_blank">by Qbii.co</a></h4>
+        <p>Inspiration: <a href="https://www.cell.com/current-biology/fulltext/S0960-9822(07)02088-X?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS096098220702088X%3Fshowall%3Dtrue" target="_blank">Link</a></p>
         <div class="controls">
-            <button class="start-btn">Start</button>
-            <button class="reset-btn">Reset</button>
+          <label for="level-select">Level:</label>
+          <select name="level-select" class="level-select">
+            <option value="level1">1 (Human)</option>
+            <option value="level2">2 (650ms)</option>
+            <option value="level3">3 (430ms)</option>
+            <option value="level4">4 (210ms)</option>
+          </select>
         </div>
-        <div class="score-display">
-            <p>Score: <span class="score">0</span></p>
-        </div>
-            <!-- Leaderboard display -->
-        <div class="leaderboard-display">
-            <h2>Leaderboard</h2>
-            <ul class="leaderboard-list"></ul>
-  </div>
-  
+      </div>
+      <div class="spacer"></div>
+      <button class="start-btn">START</button>
     </div>
-    <script src="script.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.1.0/fetch.min.js"></script>
-
+    <div class="game-board">
+      <!-- We will generate 40 squares for the 8x5 grid -->
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+    </div>
+  </div>
+  <div class="message-container" style="display:none">
+    <p class="message"></p>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>

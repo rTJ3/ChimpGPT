@@ -1,129 +1,126 @@
-// Variables
-const gameBoard = document.querySelector('.game-board');
-const startBtn = document.querySelector('.start-btn');
-const resetBtn = document.querySelector('.reset-btn');
-const scoreDisplay = document.querySelector('.score');
-let score = 0;
+const messageContainer = document.querySelector(".message-container");
+const messageElement = document.querySelector(".message");
+const startBtn = document.querySelector(".start-btn");
+const gameBoard = document.querySelector(".game-board");
+const squares = document.querySelectorAll(".square");
+const levelSelect = document.querySelector(".level-select");
 
-// Functions
-function generateGameTiles() {
-  gameBoard.innerHTML = '';
-  for (let i = 1; i <= 9; i++) {
-    const tile = document.createElement('div');
-    tile.classList.add('tile');
-    tile.dataset.number = i;
-    gameBoard.appendChild(tile);
-  }
-}
+let mode = "unmasked";
+let displayDuration = 650;
 
-function displayNumbers() {
-  const tiles = document.querySelectorAll('.tile');
-  tiles.forEach(tile => {
-    tile.textContent = tile.dataset.number;
-  });
-}
-
-function hideNumbers() {
-  const tiles = document.querySelectorAll('.tile');
-  tiles.forEach(tile => {
-    tile.textContent = '';
-  });
-}
-
-function randomizeTiles() {
-  const tiles = [...gameBoard.children];
-  while (tiles.length) {
-    const randomIndex = Math.floor(Math.random() * tiles.length);
-    gameBoard.appendChild(tiles.splice(randomIndex, 1)[0]);
-  }
-}
-
-function handleClick(event) {
-  const clickedTile = event.target;
-  if (clickedTile.classList.contains('tile')) {
-    clickedTile.textContent = clickedTile.dataset.number;
-    validateInput(clickedTile);
-  }
-}
-
-function validateInput(tile) {
-    if (parseInt(tile.dataset.number) === score + 1) {
-      score++;
-      updateScore();
-      if (score === 9) {
-        setTimeout(() => {
-          const playerName = prompt('Enter your name:');
-          gameWon(playerName, score);
-        }, 500);
-      }
-    } else {
-      alert('Incorrect! Try again.');
-      resetGame();
+levelSelect.addEventListener("change", (e) => {
+  const level = e.target.value;
+  if (level === "level1") {
+    mode = "unmasked";
+  } else {
+    mode = "masked";
+    if (level === "level2") {
+      displayDuration = 650;
+    } else if (level === "level3") {
+      displayDuration = 430;
+    } else if (level === "level4") {
+      displayDuration = 210;
     }
   }
-  
+});
 
-function updateScore() {
-  scoreDisplay.textContent = score;
+startBtn.addEventListener("click", startGame);
+
+function generateNumbers() {
+  const maxNumbers = Math.floor(Math.random() * 4) + 6; // Randomly select the number of squares that will be filled (6 to 9)
+  let nums = Array.from({ length: maxNumbers }, (_, i) => i + 1);
+  let numbers = [];
+
+  while (nums.length) {
+    const randomIndex = Math.floor(Math.random() * nums.length);
+    numbers.push(nums[randomIndex]);
+    nums.splice(randomIndex, 1);
+  }
+
+  return numbers;
 }
 
 function startGame() {
-  generateGameTiles();
-  randomizeTiles();
-  displayNumbers();
-  setTimeout(() => {
-    hideNumbers();
-    gameBoard.addEventListener('click', handleClick);
-  }, 2000);
-}
+  hideMessage();
+  squares.forEach((square) => {
+    square.textContent = "";
+    square.style.backgroundColor = "#000";
+    square.dataset.number = ""; // Reset dataset.number for all squares
+  });
 
-function resetGame() {
-  score = 0;
-  updateScore();
-  startGame();
-}
+  const numbers = generateNumbers();
 
-function gameWon(playerName, score) {
-    alert(`Congratulations, ${playerName}! You won with a score of ${score}.`);
-    updateLeaderboard(playerName, score);
-    fetchLeaderboard();
-  }
-  
+  numbers.forEach((number) => {
+    let added = false;
+    while (!added) {
+      const randomIndex = Math.floor(Math.random() * squares.length);
+      const square = squares[randomIndex];
+      if (!square.textContent) {
+        square.textContent = number;
+        square.dataset.number = number;
+        added = true;
+      }
+    }
+  });
 
-// Event Listeners
-startBtn.addEventListener('click', startGame);
-resetBtn.addEventListener('click', resetGame);
-
-function fetchLeaderboard() {
-    fetch('/leaderboard')
-      .then(response => response.json())
-      .then(leaderboard => {
-        // Display leaderboard data
-        const leaderboardList = document.querySelector('.leaderboard-list');
-        leaderboardList.innerHTML = '';
-        leaderboard.forEach((entry, index) => {
-          const listItem = document.createElement('li');
-          listItem.textContent = `${index + 1}. ${entry.playerName}: ${entry.score}`;
-          leaderboardList.appendChild(listItem);
-        });
+  if (mode === "masked") {
+    setTimeout(() => {
+      squares.forEach((square) => {
+        if (square.textContent) {
+          square.textContent = "";
+          square.style.backgroundColor = "white";
+        }
       });
+    }, displayDuration);
   }
-  
-  
-  function updateLeaderboard(playerName, score) {
-    const newEntry = {
-      playerName: playerName,
-      score: score
-    };
-    fetch('/leaderboard', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newEntry)
-    })
-      .then(response => response.text())
-      .then(message => {
-        console.log(message);
-       
-      });  }
+}
+
+let currentNumber = 1;
+
+function showMessage(message) {
+  messageElement.textContent = message;
+  messageContainer.style.display = "flex";
+  gameBoard.style.pointerEvents = "none";
+}
+
+function hideMessage() {
+  messageContainer.style.display = "none";
+  gameBoard.style.pointerEvents = "auto";
+}
+
+function squareClickHandler(e) {
+  e.stopPropagation(); // Add this line to stop event propagation
+
+  const maxNumber = Math.max(...Array.from(squares).filter(square => square.dataset.number).map(square => parseInt(square.dataset.number)));
+
+  if (parseInt(this.dataset.number) === currentNumber) {
+    this.textContent = "";
+    this.style.backgroundColor = "#000";
+    this.dataset.number = "";
+    currentNumber++;
+
+    if (currentNumber > maxNumber) {
+      showMessage("You Win!");
+      currentNumber = 1;
+      setTimeout(() => {
+        hideMessage();
+        startGame();
+      }, 2000);
+    }
+  } else if (this.dataset.number) {
+    showMessage("You Lose!");
+    currentNumber = 1;
+    setTimeout(() => {
+      hideMessage();
+      startGame();
+    }, 2000);
+  }
+}
+
+
+
+squares.forEach((square) => {
+  square.addEventListener("click", squareClickHandler);
+});
+
+startGame();

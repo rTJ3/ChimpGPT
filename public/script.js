@@ -4,6 +4,8 @@ const startBtn = document.querySelector(".start-btn");
 const gameBoard = document.querySelector(".game-board");
 const squares = document.querySelectorAll(".square");
 const levelSelect = document.querySelector(".level-select");
+const aiResult = document.querySelector(".ai-result");
+const aiTime = document.querySelector(".ai-time");
 
 let mode = "unmasked";
 let displayDuration = 650;
@@ -40,7 +42,15 @@ function generateNumbers() {
   return numbers;
 }
 
-function startGame() {
+async function aiSimulation() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(Math.floor(Math.random() * 1000) + 100); // Simulate AI completion time (100ms - 1100ms)
+    }, 0);
+  });
+}
+
+async function startGame() {
   hideMessage();
   squares.forEach((square) => {
     square.textContent = "";
@@ -73,6 +83,11 @@ function startGame() {
       });
     }, displayDuration);
   }
+
+  aiResult.style.display = "none"; // Hide the previous AI result
+  const completionTime = await aiSimulation(); // Run the AI simulation
+  aiTime.textContent = completionTime;
+  aiResult.style.display = "block"; // Display the AI result
 }
 
 let currentNumber = 1;
@@ -80,6 +95,7 @@ let currentNumber = 1;
 function showMessage(message) {
   messageElement.textContent = message;
   messageContainer.style.display = "flex";
+  gameBoard.style.pointer
   gameBoard.style.pointerEvents = "none";
 }
 
@@ -116,8 +132,6 @@ function squareClickHandler(e) {
     }, 2000);
   }
 }
-
-
 
 squares.forEach((square) => {
   square.addEventListener("click", squareClickHandler);

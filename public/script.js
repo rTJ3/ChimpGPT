@@ -138,3 +138,4 @@ squares.forEach((square) => {
 });
 
 startGame();
+

@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 
 // Middleware
 app.use(express.json({ limit: '1kb' }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'docs')));
 
 function readLeaderboard(callback) {
   fs.readFile(LEADERBOARD_FILE, 'utf8', (err, data) => {
@@ -85,7 +85,7 @@ app.post('/leaderboard', (req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'docs', 'index.html'));
 });
 
 // Log errors server-side without leaking details to the client

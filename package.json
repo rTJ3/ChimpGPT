@@ -20,13 +20,13 @@
     "Memory",
     "Test"
   ],
-  "author": "Porter, michael@qbii.co",
+  "author": "rTJ3 (https://github.com/rTJ3)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/rTJ3/ChimpGPT/issues"
   },
   "homepage": "https://github.com/rTJ3/ChimpGPT#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.22.3"
   }
 }
